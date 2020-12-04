@@ -3,8 +3,10 @@ Rails.application.routes.draw do
 
   namespace :api do
     namespace :v1 do
-      resources :projects
+      resources :projects do
+        patch '/todos/:id' => 'todos#update'
+      end
+      post '/todos' => 'todos#create'
+      end
     end
   end
-
-end

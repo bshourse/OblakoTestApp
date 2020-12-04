@@ -16,9 +16,11 @@ class Api::V1::TodosController < ApiController
        @todo.project_id = @project.id
      end
 
-     if @todo.save
-       render json: @todo, status: :created
-     else
+     if @todo.project_id.nil?
+       render json: @project.errors, status: :unprocessable_entity
+     elsif @todo.save
+       render json:  @todo, status: :created
+     else Project.find(@project.id).destroy!
        render json: @todo.errors, status: :unprocessable_entity
      end
   end
